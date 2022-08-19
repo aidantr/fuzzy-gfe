@@ -12,17 +12,14 @@ This git repository contains all the code to replicate the results of  "A Fuzzy 
 
 The bash file runall.sh runs all the necessary Matlab files in order to reproduce the tables and figures in the paper. 
 
-## File structure
+## Repository structure
 
-- data/raw: contains raw data files
-- data/clean: contains intermediate results
-- code/:
-  - code/functions: Matlab functions needed to implement our estimator
-  - code/fig1
-  - code/fig2
-  - code/table1
-- output: stores outputs for all tables and figures in the main text and appendix
+- /data/raw: contains raw data files
+- /data/clean: contains intermediate results
+- /code: the folder /code/functions contains the Matlab functions needed to implement our estimator and the other files produce all tables and figures
+- /output: stores outputs for all tables and figures in the main text and appendix
 
+## Parallelization
 
 
 
