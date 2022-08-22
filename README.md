@@ -21,7 +21,7 @@ The bash file `runall.sh` runs all the necessary Matlab files in order to reprod
 
 ## Parallelization
 
-Our main estimation is run with 250 parallel cores. However, the `FCR` function can be run with a selected nuber of workers (although this will change computation time).
+Our main estimation is run with 250 parallel cores. However, the `FCR` function can be run with a selected number of workers (although this will change computation time).
 
 
 
