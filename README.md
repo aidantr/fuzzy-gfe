@@ -1,6 +1,6 @@
 # Replication package for Lewis, Melcangi, Pilossoph, and Toner-Rodgers (2022)
 
-This repository contains all the code to replicate the results of  "A Fuzzy Clustering Approach to Estimating Grouped Fixed-Effects." The paper is available [link]. All the files are written in Matlab.
+This repository contains all the code to replicate the results of  "A Fuzzy Clustering Approach to Estimating Grouped Fixed-Effects." The paper is available [link here]. All the files are written in Matlab.
 
 ## Required Matlab toolboxes
 
