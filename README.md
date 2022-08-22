@@ -10,7 +10,7 @@ This repository contains all the code to replicate the results of  "A Fuzzy Clus
 
 ## How to run
 
-The bash file runall.sh runs all the necessary Matlab files in order to reproduce the tables and figures in the paper. 
+The bash file `runall.sh` runs all the necessary Matlab files in order to reproduce the tables and figures in the paper. 
 
 ## Repository structure
 
@@ -21,6 +21,7 @@ The bash file runall.sh runs all the necessary Matlab files in order to reproduc
 
 ## Parallelization
 
+Our main estimation is run with 250 parallel cores. However, our  `FCR` function has the option to select number of cores, so the replication can be run with any specified number. 
 
 
 
