@@ -14,7 +14,7 @@ The bash file `runall.sh` runs all the necessary Matlab files to reproduce the t
 
 ## Repository structure
 
-- `data/raw` contains the raw data, which come from the Bonhomme and Manresa (2015) replication files
+- `data/raw` contains the raw data, which come from the Bonhomme and Manresa (2015) [replication files](https://www.dropbox.com/s/ssjabvc2hxa5791/Bonhomme_Manresa_codes.zip?dl=0)
 - `data/intermediate` stores intermediate files
 - `code` contains the Matlab functions needed to implement our estimator and all files to produce the output
 - `output` stores results for all tables and figures in the main text and appendix
