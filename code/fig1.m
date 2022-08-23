@@ -5,7 +5,12 @@ clear all; clc;
 
 addpath(genpath('/code/functions'))
 
-parpool(250);
+%options
+m = 1.001;
+cores = 250;
+startvals = 1000;
+
+parpool(cores);
 
 %% estimation
 
@@ -21,7 +26,7 @@ x = BMRHS(:,1);
 
 % loop over G
 for G = 2:15
-    [fe{G}, zeta(:,G), weights{G}, ~, SE{G}] = FCR(t,y,x,controls,G,1.001,1000,250,true);
+    [fe{G}, zeta(:,G), weights{G}, ~, SE{G}] = FCR(t,y,x,controls,G,m,startvals,true,true);
 end
 
 save('output/fig1')
@@ -90,7 +95,9 @@ saveas(gcf,"output/fig1b",'pdf')
 hold off
 
 
-
+% from the replication package for "A Fuzzy Clustering Approach to Estimating
+% Grouped Fixed-Effects" by Lewis, Melangi, Pilossoph, and Toner-Rodgers
+% (2022)
 
 
 

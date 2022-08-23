@@ -1,12 +1,17 @@
 
 % generates figure 2 which plots FE coefficients for G=4
 
-cd /Users/aidan/Dropbox/FCR_panel_m1/replication/
-
 addpath(genpath('code/functions'))
 
+%options
+m = 1.001;
+cores = 250;
+startvals = 100;
+
+parpool(cores);
+
 %% estimation
-[fe, zeta, weights] = FCR(t,y,x,controls,G,1.001,100,250,false);
+[fe, zeta, weights] = FCR(t,y,x,controls,G,m,100,true,false);
 
 
 %% load BM coefficients and plot
@@ -44,3 +49,7 @@ ax.FontSize = 13;
 legend('FCR','GFE','Location','southeast','fontsize',10)
 saveas(gcf,"output/fig2",'pdf')
 hold off
+
+% from the replication package for "A Fuzzy Clustering Approach to Estimating
+% Grouped Fixed-Effects" by Lewis, Melangi, Pilossoph, and Toner-Rodgers
+% (2022)

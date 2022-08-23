@@ -5,7 +5,12 @@ clear;
 
 addpath(genpath('code/functions'))
 
-parpool(250)
+%options
+m = 1.001;
+cores = 250;
+startvals = 1000;
+
+parpool(cores)
 
 %loop over choice of G
 for G = [3 10]
@@ -31,7 +36,7 @@ for G = [3 10]
     
             %run FCR
             timer=tic;
-            [fe{rep}, zeta(:,rep), weights{rep}] = FCR(t,y,x,controls,G,1.001,2,1,false);
+            [fe{rep}, zeta(:,rep), weights{rep}] = FCR(t,y,x,controls,G,m,startvals,true,false);
             time_r(rep) = toc(timer);
     
             %bias, MSE, and misclassification
@@ -67,7 +72,9 @@ save('output/fig3')
 
 
 
-
+% from the replication package for "A Fuzzy Clustering Approach to Estimating
+% Grouped Fixed-Effects" by Lewis, Melangi, Pilossoph, and Toner-Rodgers
+% (2022)
 
 
 
