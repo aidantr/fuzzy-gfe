@@ -16,7 +16,8 @@ function [alpha, zeta, wgts, obj, SE] = FCR(t,y,x,Z,G,m,sims,parallel,std_errors
     %  G: number of groups
     %  m: fuzzy tuning param.
     %  sims: number of starting values 
-    %  cores: number parallel workers
+    %  parralel: true/false for running in parallel
+    % std_errors: true/false for producing standard errors
     
     % OUTPUTS
     
