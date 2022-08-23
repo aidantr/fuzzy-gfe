@@ -1,5 +1,5 @@
 
-function [alpha, zeta, wgts, obj, SE] = FCR(t,y,x,Z,G,m,sims,cores,std_errors)
+function [alpha, zeta, wgts, obj, SE] = FCR(t,y,x,Z,G,m,sims,parallel,std_errors)
 
     %% inputs
     
@@ -55,7 +55,24 @@ function [alpha, zeta, wgts, obj, SE] = FCR(t,y,x,Z,G,m,sims,cores,std_errors)
     ResWgts     = zeros(length(y),G,sims);
     
     %loop over starting values
-    if cores == 1
+    if parallel
+        parfor i=1:sims
+            %starting value
+            startval = [unifrnd(-1,0,G*T,1); baseline_guess(1:end)];
+    
+            % minimize objective wrt a
+            [ahold,obj,~,~,~,~, hessian] = fmincon(@(a) objective(a,y,Z,timed(:,1:end),G,m),startval,A,b,[],[],[],[],[],options);
+    
+            %store output
+            coeffs            = reshape(ahold,1,G*T+size(Z,2));
+            ResFE(:,i)     = coeffs(1:G*T);
+            ResZeta(:,i)   = coeffs(G*T+1:end);
+            ResWgts(:,:,i) = weights(ResFE(:,i),ResZeta(:,i),y,timed(:,1:end),Z,G,m) ;
+            ResL(i)        = obj;
+            ResH(:,:,i)    = hessian;
+        end
+
+    else
         for i=1:sims
             %starting value
             startval = [unifrnd(-1,0,G*T,1); baseline_guess(1:end)];
@@ -74,24 +91,6 @@ function [alpha, zeta, wgts, obj, SE] = FCR(t,y,x,Z,G,m,sims,cores,std_errors)
             ResH(:,:,i)    = hessian;
         end
     
-    else
-        % initialize parallel workers
-        %parpool(cores)
-        parfor i=1:sims
-            %starting value
-            startval = [unifrnd(-1,0,G*T,1); baseline_guess(1:end)];
-    
-            % minimize objective wrt a
-            [ahold,obj,~,~,~,~, hessian] = fmincon(@(a) objective(a,y,Z,timed(:,1:end),G,m),startval,A,b,[],[],[],[],[],options);
-    
-            %store output
-            coeffs            = reshape(ahold,1,G*T+size(Z,2));
-            ResFE(:,i)     = coeffs(1:G*T);
-            ResZeta(:,i)   = coeffs(G*T+1:end);
-            ResWgts(:,:,i) = weights(ResFE(:,i),ResZeta(:,i),y,timed(:,1:end),Z,G,m) ;
-            ResL(i)        = obj;
-            ResH(:,:,i)    = hessian;
-        end
     end
     
     % choose minimizing coefficients
