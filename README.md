@@ -10,7 +10,7 @@ This repository contains all the code to replicate the results of  "A Fuzzy Clus
 
 ## How to run
 
-The bash file `runall.sh` runs all the necessary Matlab files in order to reproduce the tables and figures in the paper. 
+The bash file `runall.sh` runs all the necessary Matlab files to reproduce the tables and figures in the paper. 
 
 ## Repository structure
 
