@@ -19,6 +19,7 @@ function [GRAD] = gradient(ahold,y,Z,t,G,m)
         Zt      = permute(cat(3,Zt{:}),[3,1,2]);
         
         %weights
+        %wgt = dlarray(zeros(N,G));
         wgt = zeros(N,G);
         
         for g=1:G

@@ -16,8 +16,7 @@ function [alpha, zeta, wgts, obj, SE] = FCR(t,y,x,Z,G,m,sims,parallel,std_errors
     %  G: number of groups
     %  m: fuzzy tuning param.
     %  sims: number of starting values 
-    %  parralel: true/false for running in parallel
-    % std_errors: true/false for producing standard errors
+    %  cores: number parallel workers
     
     % OUTPUTS
     
@@ -45,7 +44,7 @@ function [alpha, zeta, wgts, obj, SE] = FCR(t,y,x,Z,G,m,sims,parallel,std_errors
     b = zeros(G-1,1);
     
     % homogeneous specification
-    homogeneous = regstats(y,Z(:,2),'linear',{'beta','covb','r'}) ; % baseline homogeneous specification
+    homogeneous = regstats(y,Z,'linear',{'beta','covb','r'}) ; % baseline homogeneous specification
     baseline_guess  = homogeneous.beta;
     
     % pre-allocate memory
@@ -59,7 +58,7 @@ function [alpha, zeta, wgts, obj, SE] = FCR(t,y,x,Z,G,m,sims,parallel,std_errors
     if parallel
         parfor i=1:sims
             %starting value
-            startval = [unifrnd(-1,0,G*T,1); baseline_guess(1:end)];
+            startval = [unifrnd(-1,0,G*T,1); baseline_guess(2:end)];
     
             % minimize objective wrt a
             [ahold,obj,~,~,~,~, hessian] = fmincon(@(a) objective(a,y,Z,timed(:,1:end),G,m),startval,A,b,[],[],[],[],[],options);
@@ -76,7 +75,7 @@ function [alpha, zeta, wgts, obj, SE] = FCR(t,y,x,Z,G,m,sims,parallel,std_errors
     else
         for i=1:sims
             %starting value
-            startval = [unifrnd(-1,0,G*T,1); baseline_guess(1:end)];
+            startval = [unifrnd(-1,0,G*T,1); baseline_guess(2:end)];
     
             % minimize objective wrt a
 
@@ -108,7 +107,7 @@ function [alpha, zeta, wgts, obj, SE] = FCR(t,y,x,Z,G,m,sims,parallel,std_errors
         GRAD = gradient([alpha' zeta'],y,Z,timed(:,1:end),G,m);
         V = GRAD*GRAD';
         N = length(y)/size(timed,2);
-        VARCOVAR = (inv(hessian./(N))*(V./(N))*inv(hessian./(N)))./N;
+        VARCOVAR = (inv(H./(N))*(V./(N))*inv(H./(N)))./N;
         SE = sqrt(diag(VARCOVAR));
     end
 
