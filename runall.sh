@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Runall for "A Fuzzy CLustering Approach to Estimating Grouped Fixed-Effects." Runs Matlab files in order to produce 
-# all tables and figures in the main text and appendix.
+# Runall for "A Fuzzy CLustering Approach to Estimating Grouped Fixed-Effects" by Lewis, Melcangi, Pilossoph, and Toner-Rodgers
+# Runs Matlab files to produce all tables and figures in the main text and appendix.
 
 # set main directory
 cd <put path here>
