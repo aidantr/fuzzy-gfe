@@ -18,3 +18,5 @@ end
 weight = repelem(wgt,T,1);
 
 end
+
+% from the replication package for Lewis, Melcangi, Pilossoph, and Toner-Rodgers (2022)

@@ -119,3 +119,5 @@ function [alpha, zeta, wgts, obj, SE] = FCR(t,y,x,Z,G,m,sims,parallel,std_errors
     end
 
 end
+
+% from the replication package for Lewis, Melcangi, Pilossoph, and Toner-Rodgers (2022)

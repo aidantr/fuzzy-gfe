@@ -41,6 +41,7 @@ for n = 1:length(y)/size(t,2)
     GRAD(:,n) = grad_n; 
 end
 
-
-
 end
+
+
+% from the replication package for Lewis, Melcangi, Pilossoph, and Toner-Rodgers (2022)
