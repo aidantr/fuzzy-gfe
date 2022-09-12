@@ -1,4 +1,5 @@
 
+
 % generate simulation results shown in table 1
 
 clear;
@@ -31,7 +32,7 @@ for sval = [1 5 10 100]
             t = repmat([1:T]',N,1);
             x = XM(:,1,rep);
             true_group = repelem(ginumb,T,1);
-            clearvars -except dem_bias_r inc_bias_r dem_MSE_r inc_MSE_r misclass_r fe zeta weights SEs SE_r G rep theta_par y N controls t x true_group
+            clearvars -except time_r dem_bias_r inc_bias_r dem_MSE_r inc_MSE_r misclass_r fe zeta weights SEs SE_r G rep theta_par y N controls t x true_group
     
             %run FCR
             timer=tic;
@@ -41,9 +42,7 @@ for sval = [1 5 10 100]
             %bias, MSE, and misclassification
             dem_bias_r(rep) = abs(theta_par(1)-zeta(1,rep));
             inc_bias_r(rep) = abs(theta_par(2)-zeta(2,rep));
-            
-            dem_MSE_r(rep) = sqrt((theta_par(1)-zeta(1,rep))^2) ;
-            inc_MSE_r(rep) = sqrt((theta_par(2)-zeta(2,rep))^2) ;
+
             
             orderings = perms(1:G);
             [~,max_wgts] = max(weights{rep},[],2);
@@ -59,8 +58,8 @@ for sval = [1 5 10 100]
         %store results for table
         dem_bias(G,sval) = mean(dem_bias_r);
         inc_bias(G,sval) = mean(inc_bias_r);
-        dem_MSE(G,sval) = mean(dem_MSE_r);
-        inc_MSE(G,sval) = mean(inc_MSE_r);
+        dem_MSE(G,sval) = sqrt(sum(dem_bias_r.^2));
+        inc_MSE(G,sval) = sqrt(sum(inc_bias_r.^2));
         misclass(G,sval) = mean(misclass_r);
         time(G,sval) = mean(time_r(2:end));
    
@@ -68,13 +67,8 @@ for sval = [1 5 10 100]
 end
 
 save('output/tableB1')
-    
 
-
-% from the replication package for "A Fuzzy Clustering Approach to Estimating
-% Grouped Fixed-Effects" by Lewis, Melangi, Pilossoph, and Toner-Rodgers
-% (2022)
-
+% from the replication package for Lewis, Melcangi, Pilossoph, and Toner-Rodgers (2022)
 
 
 
