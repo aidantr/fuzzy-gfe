@@ -1,4 +1,8 @@
 
+% implements the FCR estimator from Lewis, Melcangi, 
+% Pilossoph, and Toner-Rodgers (2022)
+
+
 function [alpha, zeta, wgts, obj, SE] = FCR(t,y,x,Z,G,m,sims,parallel,std_errors)
 
     %% inputs
@@ -16,7 +20,8 @@ function [alpha, zeta, wgts, obj, SE] = FCR(t,y,x,Z,G,m,sims,parallel,std_errors
     %  G: number of groups
     %  m: fuzzy tuning param.
     %  sims: number of starting values 
-    %  cores: number parallel workers
+    %  parallel: T/F for whether run in parallel
+    %  std_errors: T/F for whether to produce standard errors
     
     % OUTPUTS
     
@@ -31,7 +36,7 @@ function [alpha, zeta, wgts, obj, SE] = FCR(t,y,x,Z,G,m,sims,parallel,std_errors
     %% function
     
     %fmincon options
-    options = optimoptions('fmincon','Display','iter','SpecifyObjectiveGradient',false,'StepTolerance',1e-10,'ConstraintTolerance',1e-10,'FunctionTolerance',1e-10,'ObjectiveLimit',sqrt(1e-6./(G)),'MaxIterations',10000,'MaxFunctionEvaluations',10000,'OptimalityTolerance',1e-4);
+    options = optimoptions('fmincon','Display','none','SpecifyObjectiveGradient',false,'StepTolerance',1e-10,'ConstraintTolerance',1e-10,'FunctionTolerance',1e-10,'ObjectiveLimit',sqrt(1e-6./(G)),'MaxIterations',1000,'MaxFunctionEvaluations',1000,'OptimalityTolerance',1e-4);
     
     % time dummies
     T = length(grpstats(t,t));
@@ -44,8 +49,9 @@ function [alpha, zeta, wgts, obj, SE] = FCR(t,y,x,Z,G,m,sims,parallel,std_errors
     b = zeros(G-1,1);
     
     % homogeneous specification
-    homogeneous = regstats(y,Z,'linear',{'beta','covb','r'}) ; % baseline homogeneous specification
+    homogeneous = regstats(y,[Z timed],'linear',{'beta','covb','r'}) ; % baseline homogeneous specification
     baseline_guess  = homogeneous.beta;
+   
     
     % pre-allocate memory
     ResFE       = zeros(G*T,sims);
@@ -58,7 +64,7 @@ function [alpha, zeta, wgts, obj, SE] = FCR(t,y,x,Z,G,m,sims,parallel,std_errors
     if parallel
         parfor i=1:sims
             %starting value
-            startval = [unifrnd(-1,0,G*T,1); baseline_guess(2:end)];
+            startval = [unifrnd(-1,0,G*T,1); baseline_guess(2:3)];
     
             % minimize objective wrt a
             [ahold,obj,~,~,~,~, hessian] = fmincon(@(a) objective(a,y,Z,timed(:,1:end),G,m),startval,A,b,[],[],[],[],[],options);
@@ -75,7 +81,7 @@ function [alpha, zeta, wgts, obj, SE] = FCR(t,y,x,Z,G,m,sims,parallel,std_errors
     else
         for i=1:sims
             %starting value
-            startval = [unifrnd(-1,0,G*T,1); baseline_guess(2:end)];
+            startval = [unifrnd(-1,0,G*T,1); baseline_guess(2:3)];
     
             % minimize objective wrt a
 
@@ -104,7 +110,8 @@ function [alpha, zeta, wgts, obj, SE] = FCR(t,y,x,Z,G,m,sims,parallel,std_errors
     if std_errors
         % standard errors 
         H = ResH(:,:,index(1));
-        GRAD = gradient([alpha' zeta'],y,Z,timed(:,1:end),G,m);
+        %GRAD = gradient([alpha' zeta'],y,Z,timed(:,1:end),G,m,A,b);
+        GRAD = gradient_autodiff([alpha' zeta'],y,Z,timed(:,1:end),G,m);
         V = GRAD*GRAD';
         N = length(y)/size(timed,2);
         VARCOVAR = (inv(H./(N))*(V./(N))*inv(H./(N)))./N;
