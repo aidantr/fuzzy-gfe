@@ -77,7 +77,5 @@ end
 save('output/table1')
 
 
-% from the replication package for "A Fuzzy Clustering Approach to Estimating
-% Grouped Fixed-Effects" by Lewis, Melangi, Pilossoph, and Toner-Rodgers
-% (2022)
+% from the replication package for Lewis, Melcangi, Pilossoph, and Toner-Rodgers (2022)
     
