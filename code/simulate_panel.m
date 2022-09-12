@@ -236,3 +236,5 @@ for Nmax = [1:14]
     
     end
 end
+
+% from the replication package for Lewis, Melcangi, Pilossoph, and Toner-Rodgers (2022)
