@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Runall for "A Fuzzy Clustering Approach to Estimating Grouped Fixed-Effects" by Lewis, Melcangi, Pilossoph, and Toner-Rodgers (2022)
+# Runall for "Approximating Grouped Fixed Effects Estimation via Fuzzy Clustering Regression" 
+# Lewis, Melcangi, Pilossoph, and Toner-Rodgers (2022)
 # Runs Matlab files to produce all tables and figures in the main text and appendix
 
 # set main directory
