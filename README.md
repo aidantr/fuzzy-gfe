@@ -9,7 +9,7 @@ This repository contains code to replicate the results of  "Approximating Groupe
 
 ## How to run
 
-The bash file `runall.sh` runs all the necessary Matlab files to reproduce the tables and figures in the main text and appendix. If you're interested in implementing the FCR estimator on your own dataset, check out the `FCR.m` function in code/functions, which calls `objective.m`, `gradient.m`, and `weights.m'.
+The bash file `runall.sh` runs all the necessary Matlab files to reproduce the tables and figures in the main text and appendix. If you're interested in implementing the FCR estimator on your own dataset, check out the `FCR.m` function in code/functions.
 
 ## Repository structure
 
