@@ -27,3 +27,5 @@ end
 L = sum(sum((wgt(:,:).^m).*permute(sum(e(:,:,:).^2,2),[1,3,2]),2),1);
 
 end
+
+% from the replication package for Lewis, Melcangi, Pilossoph, and Toner-Rodgers (2022)
