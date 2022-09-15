@@ -1,6 +1,6 @@
 
 % calculates the gradient of the unit-specific objective
-% in order to produce the standard errors
+% in order to produce standard errors
 
 function [GRAD] = gradient(ahold,y,Z,t,G,m,A,b)
 
