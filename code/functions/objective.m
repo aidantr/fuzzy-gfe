@@ -1,5 +1,6 @@
-function [L]=objective(a,y,Z,t,G,m)
+% returns value of FCR objective function for a given vector of coefficients
 
+function [L]=objective(a,y,Z,t,G,m)
 
 %dimensions
 T       = size(t,2);
